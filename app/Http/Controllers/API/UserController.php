@@ -5,8 +5,22 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+// 추가
+use Illuminate\Support\Facades\Hash;
+use App\User;
+
 class UserController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +29,7 @@ class UserController extends Controller
     public function index()
     {
         //
+        return User::latest()->paginate(5);
     }
 
     /**
@@ -22,10 +37,23 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function store(Request $request)
     {
         //
+        $this->validate($request,[
+            'name' => 'required|string|max:191|unique:users',
+            'email' => 'required|string|email|max:191|unique:users',
+            'password' => 'required|string|min:6',
+            'etc' => 'max:191',
+        ]);
+        return User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'authority' => $request['authority'],
+            'etc' => $request['etc'],
+        ]);
     }
 
     /**
@@ -48,7 +76,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $this->validate($request,[
+            'name' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:users,email,'.$user->id,
+            'password' => 'sometimes|min:6',
+            'etc' => 'max:191',
+        ]);
+		if(empty($request->pwd)){
+            $request->merge(['password' => Hash::make($request['password'])]);
+        }
+        $user->update($request->all());
+        return ['message' => $request->pwd];
     }
 
     /**
@@ -60,5 +99,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+        // delete the user
+        $user->delete();
+        return ['message' => 'User Deleted'];
     }
 }
