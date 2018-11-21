@@ -10,7 +10,8 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
-
+    // admin-lte 추가
+    require('admin-lte');
     require('bootstrap');
 } catch (e) {}
 

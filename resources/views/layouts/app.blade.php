@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        {{-- <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -70,9 +70,32 @@
                     </ul>
                 </div>
             </div>
-        </nav>
-
-        <main class="py-4">
+        </nav> --}}
+        
+        @if (Route::has('login'))
+            
+        @auth
+            <div class="top-left links">
+                <a href="{{ url('/home') }}"><i class="fas fa-home teal"></i>{{ __(' 메인페이지') }}</a>
+            </div>
+            <div class="top-right links">
+                <a 	class="nav-link red"
+                    href="#"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    {{ __('로그아웃 ') }}<i class="fas fa-power-off orangered"></i>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+        @else
+            <div class="top-right links">
+                <a href="{{ route('login') }}"><i class="fas fa-sign-in-alt green"></i>{{ __(' 로그인') }}</a>
+                <a href="{{ route('register') }}"><i class="fas fa-user-plus blue"></i>{{ __(' 회원가입') }}</a>
+        @endauth
+            </div>
+        @endif
+        <main class="py-0">
             @yield('content')
         </main>
     </div>

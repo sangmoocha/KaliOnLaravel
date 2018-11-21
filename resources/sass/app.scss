@@ -1,14 +1,124 @@
-
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+html, body {
+  font-weight: 200;
+  font-family: 'Nanum Gothic Coding', monospace;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+.top-left{
+  position: absolute;
+  left: 10px;
+  top: 18px;
+}
+
+.top-right {
+  position: absolute;
+  right: 10px;
+  top: 18px;
+}
+
+.links > a {
+  color:dimgrey;
+  padding: 0 25px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.content {
+  height: 100vh;
+  background-size: cover;
+}
+
+.welcom-img {
+  background-image:url('/img/welcom.png');
+}
+
+.auth-img {
+  background-image:url('/img/auth.png');
+}
+
+.title {
+  position: absolute;
+  left: 30%;
+  top: 25%;
+  font-size: 3rem;
+  color: orangered;
+  writing-mode: tb-rl;
+}
+// Login Page
+.box {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0,0,0,.8);
+  padding: 30px;
+  top: 50%;
+  left: 50%;
+  min-width: 300px;
+  max-width: 500px;
+  width: 40%;
+  box-sizing: border-box;
+  box-shadow: 0, 15px, 25px, rgba(0,0,0,.5);
+  border-radius: 10px;
+  .header{
+    h2, h3, h4 {
+      margin: 0 0 30px;
+      padding: 0;
+      color: #fff;
+    }
+  }
+  
+  .footer{
+    padding-top: 20px;
+  }
+
+  .inputbox {
+    position: relative;
+
+    .form-control {
+      height: 1.5rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0 10px;
+      color: #fff;
+      margin-bottom: 2.5rem;
+      border: none;
+      border-bottom: 1px solid #fff;
+      outline: none;
+      background: transparent;
+    }
+    
+    label {
+      position: absolute;
+      top: -0.2rem;
+      left: 0;
+      padding: 0;
+      font-size: 1.2rem;
+      color: #fff;
+      pointer-events: none;
+      transition: .5s;
+    }
+
+    strong {
+      position: absolute;
+      top: 6rem;
+      left: 0;
+      padding: 0;
+    }
+
+    input:focus ~ label, input:valid ~ label {
+      top: -1.8rem;
+      left: 5;
+      color: orangered;
+      font-size: 0.9rem;
+    }
+  }
 }
